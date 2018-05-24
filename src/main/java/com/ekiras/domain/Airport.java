@@ -1,5 +1,32 @@
 package com.ekiras.domain;
 
 public class Airport extends Coordinate {
+	
+	private String name;
+	private String code;
+	
+	public Airport(Long latitude, Long longitude, String name, String code) {
+		super(latitude, longitude);
+		this.name = name;
+		this.code = code;
+	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+	
+	
+	
 }

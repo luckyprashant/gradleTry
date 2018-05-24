@@ -5,6 +5,11 @@ public class Coordinate {
 	private Long latitude;
 	private Long longitude;
 	
+	public Coordinate(Long latitude, Long longitude) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+	
 	public Long getLatitude() {
 		return latitude;
 	}
