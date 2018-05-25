@@ -8,10 +8,9 @@ import com.ekiras.domain.Coordinate;
 @Service
 public class AirportLocatorService {
 
-
 	public Airport getAirport(Coordinate coordinate) {
 		// Read excel perform business logic
-		return new Airport(80l, 84l, "Amsterdam", "AMS");
+		return new Airport(new Coordinate(80l, 84l), "Amsterdam", "AMS");
 	}
 
 }
