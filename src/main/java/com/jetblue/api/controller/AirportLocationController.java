@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,15 +38,6 @@ public class AirportLocationController {
 	@Autowired
 	private ErrorHelper errorHelper;
 	
-	/**
-	 * Test.
-	 *
-	 * @return the string
-	 */
-	@GetMapping(value = "/test")
-    public String test(){
-        return " hello world";
-    }
 	
 	/**
 	 * Gets the airport.
@@ -57,7 +47,7 @@ public class AirportLocationController {
 	 */
 	@PostMapping(value = "/fetch-airport", produces = "application/json") 
 	@ApiOperation(value = "To fetch nearest airport location for passed co-ordinates", response = ResponseEntity.class)
-    public ResponseEntity<?> getAirport(@Valid @RequestBody Airport airport, BindingResult bindingErrors){
+    public ResponseEntity<?> getAirport(@RequestBody Airport airport, BindingResult bindingErrors){
 		LOG.debug("Location details for fetching nearest airport: {}", airport);
 		if(bindingErrors.hasErrors()) {
 			LOG.error("Validation error in passed co-ordinate. Details: {}", airport);

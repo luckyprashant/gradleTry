@@ -42,6 +42,16 @@ public class Airport {
 	}
 
 	/**
+	 * Instantiates a new airport object from {@link Location} object.
+	 *
+	 * @param location the location
+	 */
+	public Airport(Location location) {
+		this.coordinate = new Coordinate(location.getLatitude(), location.getLongitude());
+		this.name = location.getName();
+	}
+
+	/**
 	 * Gets the name.
 	 *
 	 * @return the name
@@ -95,7 +105,19 @@ public class Airport {
 		this.coordinate = coordinate;
 	}
 	
-	@Override
+	/**
+	 * Gets the lat and long.
+	 * This is used to create the key for cache generation in {@link AiportLocatorService}
+	 *
+	 * @return the lat and long
+	 */
+	public String getLatAndLong() {
+		return Long.toString(this.coordinate.getLatitude())+Long.toString(this.coordinate.getLongitude());
+	}
+	 /* (non-Javadoc)
+ 	 * @see java.lang.Object#toString()
+ 	 */
+ 	@Override
 	public String toString() {
 		JSONObject airportJson = new JSONObject();
 		try {

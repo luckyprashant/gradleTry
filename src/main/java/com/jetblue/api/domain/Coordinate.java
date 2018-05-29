@@ -1,25 +1,24 @@
 package com.jetblue.api.domain;
 
-import javax.validation.constraints.NotNull;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.jetblue.api.validator.ValidLatitude;
+import com.jetblue.api.validator.ValidLongitude;
 
 /**
  * The Class Coordinate.
  */
 public class Coordinate {
 
-	@NotNull(message = "Latitude cannot be null.")
-	// @Pattern(regexp = "^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)", message = "Latitude validation error.")
-	private Long latitude;
+//	@ValidLatitude
+	private long latitude;
 
-	@NotNull(message = "Longitude cannot be null.")
-	// @Pattern(regexp = "\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$", message = "Longitude validation error.")
-	private Long longitude;
-	
+//	@ValidLongitude
+	private long longitude;
+
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
 	/**
@@ -30,7 +29,7 @@ public class Coordinate {
 	 * @param longitude
 	 *            the longitude
 	 */
-	public Coordinate(Long latitude, Long longitude) {
+	public Coordinate(long latitude, long longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
@@ -47,7 +46,7 @@ public class Coordinate {
 	 *
 	 * @return the latitude
 	 */
-	public Long getLatitude() {
+	public long getLatitude() {
 		return latitude;
 	}
 
@@ -57,7 +56,7 @@ public class Coordinate {
 	 * @param latitude
 	 *            the new latitude
 	 */
-	public void setLatitude(Long latitude) {
+	public void setLatitude(long latitude) {
 		this.latitude = latitude;
 	}
 
@@ -66,7 +65,7 @@ public class Coordinate {
 	 *
 	 * @return the longitude
 	 */
-	public Long getLongitude() {
+	public long getLongitude() {
 		return longitude;
 	}
 
@@ -76,10 +75,15 @@ public class Coordinate {
 	 * @param longitude
 	 *            the new longitude
 	 */
-	public void setLongitude(Long longitude) {
+	public void setLongitude(long longitude) {
 		this.longitude = longitude;
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		JSONObject coordinateJson = new JSONObject();
@@ -87,10 +91,10 @@ public class Coordinate {
 			coordinateJson.put("latitude", this.latitude);
 			coordinateJson.put("longitude", this.longitude);
 		} catch (JSONException e) {
-			LOG.error("Error in forming json for co-ordinate object. Latitude: {}, Longitude: {}", this.latitude, this.longitude);
+			LOG.error("Error in forming json for co-ordinate object. Latitude: {}, Longitude: {}", this.latitude,
+					this.longitude);
 		}
 		return coordinateJson.toString();
 	}
-
 
 }
