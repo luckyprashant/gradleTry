@@ -1,11 +1,13 @@
 package com.jetblue.api.domain;
 
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jetblue.api.constant.AppEnum;
 
 /**
  * The Class Airport.
@@ -23,6 +25,8 @@ public class Airport {
 	private String countryCode;
 	
 	private Coordinate coordinate;
+	
+	private Double distanceWithLocation;
 	
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	
@@ -169,6 +173,24 @@ public class Airport {
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
 	}
+	
+	/**
+	 * Gets the distance with location.
+	 *
+	 * @return the distance with location
+	 */
+	public Double getDistanceWithLocation() {
+		return distanceWithLocation;
+	}
+
+	/**
+	 * Sets the distance with location.
+	 *
+	 * @param distanceWithLocation the new distance with location
+	 */
+	public void setDistanceWithLocation(Double distanceWithLocation) {
+		this.distanceWithLocation = distanceWithLocation;
+	}
 
 	/**
 	 * Distance.
@@ -199,10 +221,9 @@ public class Airport {
 	/**
 	 * Distance to.
 	 *
-	 * @param airport the airport
+	 * @param location the location
 	 * @return the double
 	 */
-	// measured in statute miles
 	public double distanceTo(Location location) {
 		double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
 		double latitude = Math.toRadians(this.coordinate.getLatitude());
@@ -217,6 +238,9 @@ public class Airport {
 		// each degree on a great circle of Earth is 60 nautical miles
 		double nauticalMiles = 60 * Math.toDegrees(angle);
 		double statuteMiles = STATUTE_MILES_PER_NAUTICAL_MILE * nauticalMiles;
+		if(StringUtils.equalsIgnoreCase(AppEnum.LenghtUnit.KILOMETER.getLgthUnit(), location.getUnit())) {
+			statuteMiles = statuteMiles * 1.609344;
+		}
 		return statuteMiles;
 	}
 
@@ -256,5 +280,6 @@ public class Airport {
 		}
 		return airportJson.toString();
 	}
+
 
 }

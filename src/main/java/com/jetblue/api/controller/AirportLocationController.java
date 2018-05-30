@@ -45,7 +45,7 @@ public class AirportLocationController {
 	 * @param airport the airport
 	 * @return the airport
 	 */
-	@PostMapping(value = "/fetch-airport", produces = "application/json") 
+	@PostMapping(value = "/fetch-nearest-airport", produces = "application/json") 
 	@ApiOperation(value = "To fetch nearest airport location for passed co-ordinates", response = ResponseEntity.class)
     public ResponseEntity<?> getAirport(@Valid @RequestBody Location location, BindingResult bindingErrors){
 		LOG.debug("Location details for fetching nearest airport: {}", location);

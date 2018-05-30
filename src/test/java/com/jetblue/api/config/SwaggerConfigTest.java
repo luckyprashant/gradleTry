@@ -2,17 +2,12 @@ package com.jetblue.api.config;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.io.File;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import springfox.documentation.spring.web.plugins.Docket;
-
 import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import springfox.documentation.spring.web.plugins.Docket;
 
 /**
  * The Class SwaggerConfigTest.

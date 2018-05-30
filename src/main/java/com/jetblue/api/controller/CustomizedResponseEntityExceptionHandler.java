@@ -18,6 +18,7 @@ import com.jetblue.api.error.ApplicationError;
 import com.jetblue.api.error.ErrorDetail;
 import com.jetblue.api.error.ErrorHelper;
 import com.jetblue.api.exception.AirportNotFoundException;
+import com.jetblue.api.exception.AirportNotInRangeException;
 
 /**
  * The Class CustomizedResponseEntityExceptionHandler.
@@ -41,9 +42,23 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	 * @return the response entity
 	 */
 	@ExceptionHandler(AirportNotFoundException.class)
-	public final ResponseEntity<ApplicationError> handleUserNotFoundException(AirportNotFoundException ex, WebRequest request) {
+	public final ResponseEntity<ApplicationError> handleAirportNotFoundException(AirportNotFoundException ex, WebRequest request) {
 		ApplicationError applicationError = new ApplicationError(new Date(), ex.getMessage(), request.getDescription(false));
 		applicationError = errorHelper.setErrors(applicationError, new ErrorDetail(AppEnum.ErrorCode.AIRPORT_NOT_FOUND.getErrorCode(), AppEnum.ErrorCode.AIRPORT_NOT_FOUND.getErrorMessageKey(), AppEnum.ErrorCode.AIRPORT_NOT_FOUND.getErrorDescription()));
+		return new ResponseEntity<>(applicationError, HttpStatus.NOT_FOUND);
+	}
+	
+	/**
+	 * Handle airport not in range exception.
+	 *
+	 * @param ex the ex
+	 * @param request the request
+	 * @return the response entity
+	 */
+	@ExceptionHandler(AirportNotInRangeException.class)
+	public final ResponseEntity<ApplicationError> handleAirportNotInRangeException(AirportNotInRangeException ex, WebRequest request) {
+		ApplicationError applicationError = new ApplicationError(new Date(), ex.getMessage(), request.getDescription(false));
+		applicationError = errorHelper.setErrors(applicationError, new ErrorDetail(AppEnum.ErrorCode.AIRPORT_NOT_IN_RANGE.getErrorCode(), AppEnum.ErrorCode.AIRPORT_NOT_IN_RANGE.getErrorMessageKey(), AppEnum.ErrorCode.AIRPORT_NOT_IN_RANGE.getErrorDescription()));
 		return new ResponseEntity<>(applicationError, HttpStatus.NOT_FOUND);
 	}
 

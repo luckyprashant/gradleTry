@@ -14,6 +14,7 @@ public interface IAirportLocatorService {
 	 * @param airport the airport
 	 * @return the airport
 	 */
+//	@Cacheable(value="nearestAirport", key="#location.latAndLong")
 	public NearByAirport getAirport(Location location);
 	
 }

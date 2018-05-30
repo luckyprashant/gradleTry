@@ -14,10 +14,4 @@
         timeToIdleSeconds="21600" timeToLiveSeconds="21600"
         memoryStoreEvictionPolicy="LRU" />
 
-    <cache name="airportCsv" eternal="false"
-        maxElementsInMemory="250" overflowToDisk="false" diskPersistent="false"
-        timeToIdleSeconds="21600" timeToLiveSeconds="21600"
-        memoryStoreEvictionPolicy="LRU" />
-
- 
  </ehcache>
