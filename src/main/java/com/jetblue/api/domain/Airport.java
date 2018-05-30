@@ -7,16 +7,23 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * The Class Airport.
  */
-public class Airport {
 	
+public class Airport {
 	private String name;
 	
 	private String code;
 	
-	@Valid
+	private String city;
+	
+	private String state;
+	
+	private String countryCode;
+	
 	private Coordinate coordinate;
 	
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
@@ -27,11 +34,17 @@ public class Airport {
 	 * @param coordinate the coordinate
 	 * @param name the name
 	 * @param code the code
+	 * @param city the city
+	 * @param state the state
+	 * @param countryCode the country code
 	 */
-	public Airport(Coordinate coordinate, String name, String code) {
+	public Airport(Coordinate coordinate, String name, String code, String city, String state, String countryCode) {
 		this.coordinate = coordinate;
 		this.name = name;
 		this.code = code;
+		this.city = city;
+		this.state = state;
+		this.countryCode = countryCode;
 	}
 	
 	/**
@@ -47,8 +60,7 @@ public class Airport {
 	 * @param location the location
 	 */
 	public Airport(Location location) {
-		this.coordinate = new Coordinate(location.getLatitude(), location.getLongitude());
-		this.name = location.getName();
+//		this.coordinate = new Coordinate(location.getLatitude(), location.getLongitude());
 	}
 
 	/**
@@ -105,14 +117,142 @@ public class Airport {
 		this.coordinate = coordinate;
 	}
 	
+	
+	/**
+	 * Gets the city.
+	 *
+	 * @return the city
+	 */
+	public String getCity() {
+		return city;
+	}
+
+	/**
+	 * Sets the city.
+	 *
+	 * @param city the new city
+	 */
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	/**
+	 * Gets the state.
+	 *
+	 * @return the state
+	 */
+	public String getState() {
+		return state;
+	}
+
+	/**
+	 * Sets the state.
+	 *
+	 * @param state the new state
+	 */
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	/**
+	 * Gets the country code.
+	 *
+	 * @return the country code
+	 */
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	/**
+	 * Sets the country code.
+	 *
+	 * @param countryCode the new country code
+	 */
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+
 	/**
 	 * Gets the lat and long.
 	 * This is used to create the key for cache generation in {@link AiportLocatorService}
 	 *
 	 * @return the lat and long
 	 */
+	@JsonIgnore
 	public String getLatAndLong() {
-		return Long.toString(this.coordinate.getLatitude())+Long.toString(this.coordinate.getLongitude());
+		return Double.toString(this.coordinate.getLatitude()) + Double.toString(this.coordinate.getLongitude());
+	}
+	
+	/**
+	 * Distance.
+	 *
+	 * @param lat1 the lat 1
+	 * @param lon1 the lon 1
+	 * @param lat2 the lat 2
+	 * @param lon2 the lon 2
+	 * @param unit the unit
+	 * @return the double
+	 */
+	@JsonIgnore
+	public double distance(double lat1, double lon1, double lat2, double lon2, String unit) {
+		double theta = lon1 - lon2;
+		double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2))
+				+ Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+		dist = Math.acos(dist);
+		dist = rad2deg(dist);
+		dist = dist * 60 * 1.1515;
+		if (unit == "K") {
+			dist = dist * 1.609344;
+		} else if (unit == "N") {
+			dist = dist * 0.8684;
+		}
+		return (dist);
+	}
+	
+	/**
+	 * Distance to.
+	 *
+	 * @param airport the airport
+	 * @return the double
+	 */
+	// measured in statute miles
+	public double distanceTo(Location location) {
+		double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
+		double latitude = Math.toRadians(this.coordinate.getLatitude());
+		double longitude = Math.toRadians(this.coordinate.getLongitude());
+		double airportLat = Math.toRadians(location.getCoordinate().getLatitude());
+		double airportLong = Math.toRadians(location.getCoordinate().getLongitude());
+
+		// great circle distance in radians, using law of cosines formula
+		double angle = Math.acos(Math.sin(latitude) * Math.sin(airportLat)
+				+ Math.cos(latitude) * Math.cos(airportLat) * Math.cos(longitude - airportLong));
+
+		// each degree on a great circle of Earth is 60 nautical miles
+		double nauticalMiles = 60 * Math.toDegrees(angle);
+		double statuteMiles = STATUTE_MILES_PER_NAUTICAL_MILE * nauticalMiles;
+		return statuteMiles;
+	}
+
+	/**
+	 * This function converts decimal degrees to radians .
+	 *
+	 * @param deg
+	 *            the deg
+	 * @return the double
+	 */
+	private double deg2rad(double deg) {
+		return (deg * Math.PI / 180.0);
+	}
+
+	/**
+	 * This function converts radians to decimal degrees.
+	 *
+	 * @param rad
+	 *            the rad
+	 * @return the double
+	 */
+	private double rad2deg(double rad) {
+		return (rad * 180 / Math.PI);
 	}
 	 /* (non-Javadoc)
  	 * @see java.lang.Object#toString()

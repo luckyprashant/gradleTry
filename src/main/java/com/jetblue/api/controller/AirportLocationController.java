@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jetblue.api.domain.Airport;
+import com.jetblue.api.domain.Location;
 import com.jetblue.api.domain.NearByAirport;
 import com.jetblue.api.error.ApplicationError;
 import com.jetblue.api.error.ErrorHelper;
-import com.jetblue.api.service.AirportLocatorService;
+import com.jetblue.api.service.IAirportLocatorService;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -33,7 +34,7 @@ public class AirportLocationController {
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private AirportLocatorService airportLocatorService;
+	private IAirportLocatorService airportLocatorService;
 	
 	@Autowired
 	private ErrorHelper errorHelper;
@@ -47,14 +48,14 @@ public class AirportLocationController {
 	 */
 	@PostMapping(value = "/fetch-airport", produces = "application/json") 
 	@ApiOperation(value = "To fetch nearest airport location for passed co-ordinates", response = ResponseEntity.class)
-    public ResponseEntity<?> getAirport(@RequestBody Airport airport, BindingResult bindingErrors){
-		LOG.debug("Location details for fetching nearest airport: {}", airport);
+    public ResponseEntity<?> getAirport(@Valid @RequestBody Location location, BindingResult bindingErrors){
+		LOG.debug("Location details for fetching nearest airport: {}", location);
 		if(bindingErrors.hasErrors()) {
-			LOG.error("Validation error in passed co-ordinate. Details: {}", airport);
+			LOG.error("Validation error in passed co-ordinate. Details: {}", location);
 			ApplicationError applicationError = errorHelper.formApplicationError(bindingErrors.getAllErrors());
 			return new ResponseEntity<ApplicationError>(applicationError, HttpStatus.BAD_REQUEST);
 		}
-		NearByAirport nearByAirport = airportLocatorService.getAirport(airport);
+		NearByAirport nearByAirport = airportLocatorService.getAirport(location);
 		return new ResponseEntity<NearByAirport>(nearByAirport, HttpStatus.OK);
     }
 

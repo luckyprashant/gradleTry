@@ -52,6 +52,8 @@ dependencies {
 	compile ("org.hibernate.validator:hibernate-validator")
     compile ("org.json:json:20180130")
     compile ("net.sf.ehcache:ehcache:2.10.4")
+    compile ("commons-lang:commons-lang:2.6")
+    
 	
 	testCompile("org.springframework.boot:spring-boot-starter-test")
 	

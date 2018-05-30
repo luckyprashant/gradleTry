@@ -6,11 +6,15 @@ import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.springframework.stereotype.Component;
+
 /**
  * The Class LatitudeConstraintValidator.
  */
+@Component
 public class LongitudeConstraintValidator implements ConstraintValidator<ValidLongitude, Long> {
 
+	private static final String LONGITUDE_PATTERN="^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$";
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -18,8 +22,8 @@ public class LongitudeConstraintValidator implements ConstraintValidator<ValidLo
 	 * Annotation)
 	 */
 	@Override
-	public void initialize(final ValidLongitude constraintAnnotation) {
-		// Not needed
+	public void initialize(final ValidLongitude validLongitude) {
+		// No need to initialize.
 	}
 
 	/*
@@ -30,7 +34,10 @@ public class LongitudeConstraintValidator implements ConstraintValidator<ValidLo
 	 */
 	@Override
 	public boolean isValid(final Long longitude, final ConstraintValidatorContext context) {
-		Pattern longitudePattern = Pattern.compile("\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$");
+		if(null == longitude) {
+			return false;
+		}
+		Pattern longitudePattern = Pattern.compile(LONGITUDE_PATTERN);
 		Matcher matcher = longitudePattern.matcher(Long.toString(longitude));
 		return matcher.matches();
 	}

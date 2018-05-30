@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.jetblue.api.service.AirportLocatorService;
+import com.jetblue.api.service.impl.AirportLocatorService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AirportLocationControllerTest {

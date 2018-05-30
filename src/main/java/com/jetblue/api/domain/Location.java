@@ -1,101 +1,43 @@
 package com.jetblue.api.domain;
 
-// TODO: Auto-generated Javadoc
+import javax.validation.Valid;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * The Class Location.
  */
 public class Location {
 
-	private String name;
+	private String anyValue;
 
-	private long longitude;
-
-	private long latitude;
-
+	@Valid
+	private Coordinate coordinate;
+	
+	private final static Logger LOG = LoggerFactory.getLogger(Location.class);
+	
 	/**
 	 * Instantiates a new location.
 	 *
-	 * @param name
-	 *            the name
-	 * @param latitude
-	 *            the latitude
-	 * @param longitude
-	 *            the longitude
+	 * @param anyValue the any value
+	 * @param coordinate the coordinate
 	 */
-	public Location(String name, long latitude, long longitude) {
-		this.name = name;
-		this.latitude = latitude;
-		this.longitude = longitude;
+	public Location(String anyValue, Coordinate coordinate) {
+		this.anyValue = anyValue;
+		this.setCoordinate(coordinate);
 	}
 	
 	/**
-	 * Instantiates a new location form {@link Airport} object.
-	 *
-	 * @param aiportCoordinate the aiport coordinate
+	 * Instantiates a new location.
 	 */
-	public Location(Airport aiportCoordinate) {
-		this.name = aiportCoordinate.getName();
-		this.latitude = aiportCoordinate.getCoordinate().getLatitude();
-		this.longitude = aiportCoordinate.getCoordinate().getLongitude();
+	public Location() {
+		// Default constructor for jackson binding
 	}
 
-	/**
-	 * Gets the name.
-	 *
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Sets the name.
-	 *
-	 * @param name
-	 *            the new name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
-	 * Gets the longitude.
-	 *
-	 * @return the longitude
-	 */
-	public long getLongitude() {
-		return longitude;
-	}
-
-	/**
-	 * Sets the longitude.
-	 *
-	 * @param longitude
-	 *            the new longitude
-	 */
-	public void setLongitude(long longitude) {
-		this.longitude = longitude;
-	}
-
-	/**
-	 * Gets the latitude.
-	 *
-	 * @return the latitude
-	 */
-	public long getLatitude() {
-		return latitude;
-	}
-
-	/**
-	 * Sets the latitude.
-	 *
-	 * @param latitude
-	 *            the new latitude
-	 */
-	public void setLatitude(long latitude) {
-		this.latitude = latitude;
-	}
-
+	
 	/**
 	 * Distance to.
 	 *
@@ -106,10 +48,10 @@ public class Location {
 	// measured in statute miles
 	public double distanceTo(Location location) {
 		double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
-		double lat1 = Math.toRadians(this.latitude);
-		double lon1 = Math.toRadians(this.longitude);
-		double lat2 = Math.toRadians(location.getLatitude());
-		double lon2 = Math.toRadians(location.getLongitude());
+		double lat1 = Math.toRadians(this.coordinate.getLatitude());
+		double lon1 = Math.toRadians(this.coordinate.getLongitude());
+		double lat2 = Math.toRadians(location.getCoordinate().getLatitude());
+		double lon2 = Math.toRadians(location.getCoordinate().getLongitude());
 
 		// great circle distance in radians, using law of cosines formula
 		double angle = Math
@@ -174,13 +116,52 @@ public class Location {
 		return (rad * 180 / Math.PI);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	
+	/**
+	 * Gets the any value.
+	 *
+	 * @return the any value
 	 */
-	// return string representation of this point
+	public String getAnyValue() {
+		return anyValue;
+	}
+
+	/**
+	 * Sets the any value.
+	 *
+	 * @param anyValue the new any value
+	 */
+	public void setAnyValue(String anyValue) {
+		this.anyValue = anyValue;
+	}
+
+	/**
+	 * Gets the coordinate.
+	 *
+	 * @return the coordinate
+	 */
+	public Coordinate getCoordinate() {
+		return coordinate;
+	}
+
+	/**
+	 * Sets the coordinate.
+	 *
+	 * @param coordinate the new coordinate
+	 */
+	public void setCoordinate(Coordinate coordinate) {
+		this.coordinate = coordinate;
+	}
+	
+	@Override
 	public String toString() {
-		return name + " (" + latitude + ", " + longitude + ")";
+		JSONObject locationJson = new JSONObject();
+		try {
+			locationJson.put("latitude", this.coordinate.getLatitude());
+			locationJson.put("longitude", this.coordinate.getLongitude());
+		} catch (JSONException e) {
+			LOG.error("Error in forming json for location object. Coordinate: {}", this.coordinate);
+		}
+		return locationJson.toString();
 	}
 }
