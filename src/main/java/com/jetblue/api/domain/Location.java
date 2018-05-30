@@ -7,6 +7,8 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * The Class Location.
  */
@@ -151,6 +153,17 @@ public class Location {
 	 */
 	public void setCoordinate(Coordinate coordinate) {
 		this.coordinate = coordinate;
+	}
+	
+	/**
+	 * Gets the lat and long.
+	 * This is used to create the key for cache generation in {@link AiportLocatorService}
+	 *
+	 * @return the lat and long
+	 */
+	@JsonIgnore
+	public String getLatAndLong() {
+		return Double.toString(this.coordinate.getLatitude()) + Double.toString(this.coordinate.getLongitude());
 	}
 	
 	@Override

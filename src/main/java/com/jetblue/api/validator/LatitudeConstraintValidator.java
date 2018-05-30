@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * The Class LatitudeConstraintValidator.
  */
 @Component
-public class LatitudeConstraintValidator implements ConstraintValidator<ValidLatitude, Long> {
+public class LatitudeConstraintValidator implements ConstraintValidator<ValidLatitude, Double> {
 
 	private static final String LATITUDE_PATTERN="^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$";
 	
@@ -35,12 +35,12 @@ public class LatitudeConstraintValidator implements ConstraintValidator<ValidLat
 	 */
 
 	@Override
-	public boolean isValid(final Long latitude, final ConstraintValidatorContext context) {
+	public boolean isValid(final Double latitude, final ConstraintValidatorContext context) {
 		if(null == latitude) {
 			return false;
 		}
 		Pattern latitudePattern = Pattern.compile(LATITUDE_PATTERN);
-		Matcher matcher = latitudePattern.matcher(Long.toString(latitude));
+		Matcher matcher = latitudePattern.matcher(Double.toString(latitude));
 		return matcher.matches();
 	}
 

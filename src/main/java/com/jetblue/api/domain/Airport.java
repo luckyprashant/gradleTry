@@ -1,7 +1,5 @@
 package com.jetblue.api.domain;
 
-import javax.validation.Valid;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -172,17 +170,6 @@ public class Airport {
 		this.countryCode = countryCode;
 	}
 
-	/**
-	 * Gets the lat and long.
-	 * This is used to create the key for cache generation in {@link AiportLocatorService}
-	 *
-	 * @return the lat and long
-	 */
-	@JsonIgnore
-	public String getLatAndLong() {
-		return Double.toString(this.coordinate.getLatitude()) + Double.toString(this.coordinate.getLongitude());
-	}
-	
 	/**
 	 * Distance.
 	 *

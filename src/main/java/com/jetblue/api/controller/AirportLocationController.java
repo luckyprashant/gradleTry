@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jetblue.api.domain.Airport;
 import com.jetblue.api.domain.Location;
 import com.jetblue.api.domain.NearByAirport;
 import com.jetblue.api.error.ApplicationError;

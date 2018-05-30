@@ -14,10 +14,10 @@ import com.jetblue.api.validator.ValidLongitude;
 public class Coordinate {
 
 	@ValidLatitude
-	private Long latitude;
+	private Double latitude;
 
 	@ValidLongitude
-	private Long longitude;
+	private Double longitude;
 
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
@@ -29,7 +29,7 @@ public class Coordinate {
 	 * @param longitude
 	 *            the longitude
 	 */
-	public Coordinate(Long latitude, Long longitude) {
+	public Coordinate(Double latitude, Double longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
@@ -46,7 +46,7 @@ public class Coordinate {
 	 *
 	 * @return the latitude
 	 */
-	public Long getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 
@@ -56,7 +56,7 @@ public class Coordinate {
 	 * @param latitude
 	 *            the new latitude
 	 */
-	public void setLatitude(Long latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 
@@ -65,7 +65,7 @@ public class Coordinate {
 	 *
 	 * @return the longitude
 	 */
-	public Long getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
@@ -75,7 +75,7 @@ public class Coordinate {
 	 * @param longitude
 	 *            the new longitude
 	 */
-	public void setLongitude(Long longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
 
