@@ -61,6 +61,10 @@ dependencies {
     providedRuntime ("org.apache.tomcat.embed:tomcat-embed-jasper")
 }
 
+task stage {
+  dependsOn installDist
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '4.7'
 }
