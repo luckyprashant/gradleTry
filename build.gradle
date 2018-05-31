@@ -41,6 +41,8 @@ repositories {
     jcenter()
 }
 
+mainClassName = "com.jetblue.api.app.Application"
+
 dependencies {
     compile ("javax.servlet:jstl:1.2")
     compile ("org.springframework.boot:spring-boot-starter-web")
