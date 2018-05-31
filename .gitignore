@@ -1,5 +1,9 @@
-.gradle/
-build/
-.idea/
+build
+.gradle
+.idea
+out
 *.iml
-examples/
+*.ipr
+*.iws
+.env
+.DS_Store
