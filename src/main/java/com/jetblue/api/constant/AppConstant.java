@@ -10,5 +10,6 @@ public final class AppConstant {
 	public static final int CSV_LATITUDE_IDX = 5;
 	public static final int CSV_LONGITUDE_IDX = 6;
 	
+	public static final String MASKING_CHAR = "*";
 	
 }

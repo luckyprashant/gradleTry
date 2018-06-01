@@ -136,6 +136,8 @@ public class Location {
 			if(null != this.coordinate) {
 				locationJson.put("latitude", this.coordinate.getLatitude());
 				locationJson.put("longitude", this.coordinate.getLongitude());
+				locationJson.put("anyValue", this.anyValue);
+				locationJson.put("maxDistance", this.maxDistance);
 			}
 		} catch (JSONException e) {
 			LOG.error("Error in forming json for location object. Coordinate: {}", this.coordinate);

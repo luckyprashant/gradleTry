@@ -56,10 +56,10 @@ public class ErrorHelper {
 		ApplicationError applicationError = new ApplicationError();
 		applicationError.setTimestamp(new Date());
 		applicationError.setDetails("This is a dummy details");
-		applicationError.setMessage(AppEnum.ErrorCode.VALIDATION_COORDINATES.getErrorMessageKey());
+		applicationError.setMessage(AppEnum.ErrorCode.VALIDATION.getErrorMessageKey());
 		for(ObjectError error: allErrors) {
 			FieldError fieldError = (FieldError) error;
-			ErrorDetail errorDetail= new ErrorDetail(AppEnum.ErrorCode.VALIDATION_COORDINATES.getErrorCode(), fieldError.getField(), fieldError.getDefaultMessage());
+			ErrorDetail errorDetail= new ErrorDetail(AppEnum.ErrorCode.VALIDATION.getErrorCode(), fieldError.getField(), fieldError.getDefaultMessage());
 			applicationError.addError(errorDetail);
 		}
 		return applicationError;

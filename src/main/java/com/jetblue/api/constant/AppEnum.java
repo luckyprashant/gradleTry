@@ -4,6 +4,7 @@ import static com.jetblue.api.constant.ErrorKeyConstants.ERROR_AIRPORT_NOT_FOUND
 import static com.jetblue.api.constant.ErrorKeyConstants.ERROR_TECHNICAL;
 import static com.jetblue.api.constant.ErrorKeyConstants.ERROR_VALIDATION;
 import static com.jetblue.api.constant.ErrorKeyConstants.ERROR_AIRPORT_NOT_IN_RANGE;
+import static com.jetblue.api.constant.ErrorKeyConstants.ERROR_VALIDATION_COORDINATES;
 
 /**
  * The Class AppEnum.
@@ -45,7 +46,7 @@ public class AppEnum {
 	 */
 	public enum ErrorCode {
 
-		VALIDATION_COORDINATES("001", "Validation for provided inputs failed", ERROR_VALIDATION),
+		VALIDATION_COORDINATES("001", "Validation for provided inputs failed", ERROR_VALIDATION_COORDINATES),
 		
 		TECHINCAL("002", "Technical error occurred, please try after some time.", ERROR_TECHNICAL),
 		
